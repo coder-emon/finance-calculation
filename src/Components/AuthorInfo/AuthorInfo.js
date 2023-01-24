@@ -6,7 +6,7 @@ import {
   FaTelegram,
   FaWhatsappSquare,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+
 const AuthorInfo = () => {
   return (
     <div className="flex justify-center items-center px-5 py-5">
@@ -14,7 +14,7 @@ const AuthorInfo = () => {
         <img src={profileImg} alt="" className="w-[300px] rounded-full" />
         <h2 className="text-2xl font-semibold">Emon Howlader</h2>
         <p className="text-xl">Govt. BM College, Barisal</p>
-        <p>Department of Management</p>
+        <p className="py-1 ">Department of Management</p>
         <div className="flex justify-center items-center space-x-2 text-xl ">
           <a
             href="https://www.facebook.com/coderemon.me/"
