@@ -1,15 +1,23 @@
 import React from "react";
 import profileImg from "../../assets/profile.jpg";
+import financeImg from "../../assets/Finance.png";
 import {
   FaFacebook,
   FaFacebookMessenger,
   FaTelegram,
   FaWhatsappSquare,
 } from "react-icons/fa";
+import MetaDecorator from "../MetaDecorator/MetaDecorator";
 
 const AuthorInfo = () => {
   return (
     <div className="flex justify-center items-center px-5 py-5">
+      <MetaDecorator
+        title={"Finance Calculation by Coder Emon"}
+        description="This web appliaction is develop for provide finance calcuation services"
+        imageUrl={financeImg}
+        imageAlt="Finance Calculation"
+      ></MetaDecorator>
       <div className="flex flex-col items-center justihreffy-center bg-slate-300   p-5 w-[400px] min-h-300px rounded">
         <img src={profileImg} alt="" className="w-[300px] rounded-full" />
         <h2 className="text-2xl font-semibold">Emon Howlader</h2>
