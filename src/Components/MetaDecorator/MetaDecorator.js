@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import PropTypes from "prop-types";
 const metaDecorator = require("../../assets/metaDecorator.json");
 const MetaDecorator = ({ title, description, imageUrl, imageAlt }) => {
   return (
@@ -23,5 +24,10 @@ const MetaDecorator = ({ title, description, imageUrl, imageAlt }) => {
     </Helmet>
   );
 };
-
+MetaDecorator.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  imageAlt: PropTypes.string.isRequired,
+};
 export default MetaDecorator;
