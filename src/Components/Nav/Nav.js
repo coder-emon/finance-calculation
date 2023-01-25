@@ -24,12 +24,15 @@ const Nav = () => {
         </button>
       </div>
       {displayNav ? (
-        <ul className="flex flex-col justify-center items-center space-y-2 mb-2 text-sm">
+        <ul className="flex flex-col justify-center items-center bg-slate-300 p-3 rounded shadow-md space-y-2 mb-2 text-sm absolute top-28">
           <li className="bg-blue-500 px-2 py-1 w-full rounded text-white text-center">
             <Link to="/">Cost of Trade Credit</Link>
           </li>
           <li className="bg-blue-500 px-2 py-1 w-full rounded text-white text-center">
             <Link to="/besttradecredit">Best Cost of Trade Credit</Link>
+          </li>
+          <li className="bg-blue-500 px-2 py-1 w-full rounded text-white text-center">
+            <Link to="/amounttobepaid">Amount to be paid</Link>
           </li>
         </ul>
       ) : (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const BestTradeCredit = () => {
   const [cd, setCd] = useState();
@@ -55,6 +55,7 @@ const BestTradeCredit = () => {
     setEirArr(newEirArr);
     console.log(eirArr);
     setFinalBest(bestTradeCredit());
+    e.target.reset();
   };
   const bestTradeCredit = () => {
     const numberEir = eirArr.map((n) => n.eirAmount);
@@ -70,7 +71,7 @@ const BestTradeCredit = () => {
         <h2 className="text-center text-2xl font-bold text-white">
           Best Cost of Trade Credit
         </h2>
-        <form>
+        <form onSubmit={addToCompare}>
           <div className="flex space-x-3 mb-3">
             <div className="w-[50%]">
               <label htmlFor="cd" className="w-full text-white text-sm">
@@ -142,7 +143,7 @@ const BestTradeCredit = () => {
             </div>
             <button
               className="text-sm text-white bg-blue-700 px-2 py-1 rounded my-2 "
-              onClick={addToCompare}
+              type="submit"
             >
               Add To Compare
             </button>
