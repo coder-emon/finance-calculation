@@ -34,6 +34,9 @@ const Nav = () => {
           <li className="bg-blue-500 px-2 py-1 w-full rounded text-white text-center">
             <Link to="/amounttobepaid">Amount to be paid</Link>
           </li>
+          <li className="bg-blue-500 px-2 py-1 w-full rounded text-white text-center">
+            <Link to="/costofbankloan">Cost of Bank Loan</Link>
+          </li>
         </ul>
       ) : (
         ""
