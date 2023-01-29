@@ -7,7 +7,8 @@ const AmountToBePaid = () => {
   const [date, setDate] = useState();
   const [invoiceNo, setInvoiceNo] = useState();
   const [invoiceAmount, setInvoiceAmount] = useState();
-
+  const [termArr, setTermArr] = useState([]);
+  console.log(termArr);
   const handleCdChange = (e) => {
     setCd(e.target.value);
   };
@@ -40,7 +41,7 @@ const AmountToBePaid = () => {
     return mydate2;
   }
   const mydate2 = new Date(date);
-  console.log(mydate2);
+
   const dpDate = addDays2(mydate2, parseInt(dp));
 
   const addToCompare = (e) => {
@@ -50,59 +51,17 @@ const AmountToBePaid = () => {
     const toBePaid = invoiceAmount - discount;
     const cpLastDateOfPayment = cpDate.toDateString();
     const dpLastDateOfPayment = dpDate.toDateString();
-    const tableBody = document.getElementById("tobepaidtable");
-    const tr = document.createElement("tr");
-    tr.classList.add(
-      "border-b",
-      "border-opacity-20",
-      "dark:border-gray-700",
-      "dark:bg-gray-900",
-      "text-center"
-    );
-    tr.innerHTML = `
-    <td className="p-3">
-                        <p>${invoiceNo}</p>
-                      </td>
-                      <td className="p-3">
-                        <p>${invoiceAmount}</p>
-                      </td>
-                      <td className="p-3">
-                        <p>${discount}</p>
-                      </td>
-                      <td className="p-3">
-                        <p>${toBePaid}</p>
-                      </td>
-                      <td className="p-3 ">
-                        <p>${dp ? dpLastDateOfPayment : cpLastDateOfPayment}</p>
-                      </td>
-    
-    `;
-    tableBody.appendChild(tr);
-    const tableBody2 = document.getElementById("tobepaidtable2");
-    const tr2 = document.createElement("tr");
-    tr2.classList.add(
-      "border-b",
-      "border-opacity-20",
-      "dark:border-gray-700",
-      "dark:bg-gray-900",
-      "text-center"
-    );
-    tr2.innerHTML = `
-      <td className="p-3">
-                          <p>${invoiceNo}</p>
-                        </td>
-                        <td className="p-3">
-                          <p>${invoiceAmount}</p>
-                        </td>
-                        <td className="p-3">
-                          <p>${invoiceAmount}</p>
-                        </td>
-                        <td className="p-3 ">
-                          <p>${cpLastDateOfPayment}</p>
-                        </td>
-      
-      `;
-    tableBody2.appendChild(tr2);
+    const termInfo = {
+      invoiceNo,
+      invoiceAmount,
+      discount,
+      toBePaid,
+      cpLastDateOfPayment,
+      dpLastDateOfPayment,
+    };
+    const newTermArr = [...termArr, termInfo];
+    setTermArr(newTermArr);
+
     e.target.reset();
   };
 
@@ -219,6 +178,7 @@ const AmountToBePaid = () => {
             <h2 className="mb-4 text-xl font-semibold leading-tight text-center">
               If All Discount Taken
             </h2>
+
             <div className="overflow-x-auto">
               <table className="min-w-full text-xs">
                 {/* <colgroup>
@@ -238,7 +198,30 @@ const AmountToBePaid = () => {
                     <th className="p-3 min-w-[100px]">Last date of payment</th>
                   </tr>
                 </thead>
-                <tbody id="tobepaidtable"></tbody>
+                <tbody id="tobepaidtable">
+                  {termArr.map((term, idx) => (
+                    <tr
+                      className="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-900 text-center"
+                      key={idx}
+                    >
+                      <td className="p-3">
+                        <p>{term.invoiceNo}</p>
+                      </td>
+                      <td className="p-3">
+                        <p>{term.invoiceAmount}</p>
+                      </td>
+                      <td className="p-3">
+                        <p>{term.discount}</p>
+                      </td>
+                      <td className="p-3">
+                        <p>{term.toBePaid}</p>
+                      </td>
+                      <td className="p-3 ">
+                        <p>{term.dpLastDateOfPayment}</p>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </div>
           </div>
@@ -265,6 +248,25 @@ const AmountToBePaid = () => {
                   </tr>
                 </thead>
                 <tbody id="tobepaidtable2">
+                  {termArr.map((term, idx) => (
+                    <tr
+                      className="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-900 text-center"
+                      key={idx}
+                    >
+                      <td className="p-3">
+                        <p>{term.invoiceNo}</p>
+                      </td>
+                      <td className="p-3">
+                        <p>{term.invoiceAmount}</p>
+                      </td>
+                      <td className="p-3">
+                        <p>{term.toBePaid}</p>
+                      </td>
+                      <td className="p-3 ">
+                        <p>{term.cpLastDateOfPayment}</p>
+                      </td>
+                    </tr>
+                  ))}
                   {/* <tr className="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-900">
                     <td className="p-3">
                       <p>97412378923</p>

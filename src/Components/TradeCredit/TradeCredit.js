@@ -38,6 +38,11 @@ const TradeCredit = () => {
   const handleYearChange = (e) => {
     setYear(e.target.value);
   };
+  const sup = (
+    <>
+      <sup>{n ? n.toFixed(2) : "n"}</sup>
+    </>
+  );
   return (
     <div className="flex justify-center items-center px-5">
       <div className="flex flex-col w-full md:w-[400px] bg-gray-800 rounded shadow-white min-h-[350px] p-5">
@@ -124,6 +129,69 @@ const TradeCredit = () => {
             </h2>
           </div>
         </div>
+        {cd && cp && dp ? (
+          <>
+            {" "}
+            <h2 className="text-3xl font-bold text-center text-white my-1">
+              Solving Formula
+            </h2>
+            <div className="flex flex-col items-start">
+              <div className="flex justify-center items-center space-x-2 text-white">
+                <div>APR=</div>
+                <div className="flex flex-col justify-center items-center">
+                  <span className="pb-1">CD</span>
+                  <span></span>
+                  <span className="border-t border-blue-50">100 - CD</span>
+                </div>
+                <div>x</div>
+                <div className="flex flex-col justify-center items-center">
+                  <span className="pb-1">360</span>
+                  <span></span>
+                  <span className="border-t border-blue-50">CP - DP</span>
+                </div>
+                <div>x</div>
+                <div>100</div>
+              </div>
+              <div className="flex justify-center items-center space-x-2 ml-[8%] text-white">
+                <div> =</div>
+                <div className="flex flex-col justify-center items-center">
+                  <span className="pb-1">{cd}</span>
+                  <span></span>
+                  <span className="border-t border-blue-50">100 - {cd}</span>
+                </div>
+                <div>x</div>
+                <div className="flex flex-col justify-center items-center">
+                  <span className="pb-1">360</span>
+                  <span></span>
+                  <span className="border-t border-blue-50">
+                    {cp} - {dp}
+                  </span>
+                </div>
+                <div>x</div>
+                <div>100</div>
+              </div>
+              <div className="text-white">
+                {" "}
+                <h2 className="w-[400px]  ml-[7%]  "> = {getApr()}%</h2>
+              </div>
+            </div>
+            <div className="flex flex-col items-start text-white mt-7">
+              <div className="flex justify-center e">
+                <div>
+                  EIR ={`{`}(1 + r) {sup} - 1{`}`} x 100
+                </div>
+              </div>
+              <div className="flex justify-center ml-[8%]">
+                <div>
+                  ={`{`}(1 + {r ? r.toFixed(5) : "r"}) {sup} - 1{`}`} x 100
+                </div>
+              </div>
+              <div className="ml-[8%]"> = {getEir()}%</div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
