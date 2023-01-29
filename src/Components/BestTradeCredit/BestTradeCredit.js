@@ -164,13 +164,17 @@ const BestTradeCredit = () => {
           <h2 className="text-center text-indigo-100">
             <span className="text-xl font-semibold">Best Term</span>
             <span> {finalBest?.name}</span>
-            <span> Cost:</span>
-            <span> {finalBest?.eirAmount}%</span>
+            <span> {finalBest?.name ? "Cost:" : ""}</span>
+            <span>
+              {" "}
+              {finalBest?.eirAmount}
+              {finalBest?.eirAmount ? "%" : ""}
+            </span>
           </h2>
           <div className="flex flex-col justify-center items-center text-white">
             {eirArr.map((ear, idx) => (
               <p key={idx}>
-                {idx + 1}: {ear.name} cost:- {ear.eirAmount}%
+                {idx + 1}: {ear.name} Cost:- {ear.eirAmount}%
               </p>
             ))}
           </div>
