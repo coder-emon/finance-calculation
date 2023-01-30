@@ -171,7 +171,7 @@ const AmountToBePaid = () => {
           </div>
         </form>
         <div className="flex flex-col items-center justify-center">
-          <h2 className="text-3xl font-bold text-center text-white my-1">
+          <h2 className="text-2xl font-bold text-center text-white my-1">
             Result
           </h2>
           <div className="container p-2 mx-auto sm:p-4 text-gray-100">

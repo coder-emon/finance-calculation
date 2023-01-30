@@ -108,23 +108,23 @@ const TradeCredit = () => {
           </div>
         </form>
         <div>
-          <h2 className="text-3xl font-bold text-center text-white my-1">
+          <h2 className="text-2xl font-bold text-center text-white my-1">
             Result
           </h2>
           <div className="flex justify-evenly items-center">
-            <h2 className="text-2xl text-semibold text-white">
+            <h2 className="text-xl text-semibold text-white">
               APR = {getApr()}%
             </h2>
-            <h2 className="text-2xl text-semibold text-white">
+            <h2 className="text-xl text-semibold text-white">
               EIR = {getEir()}%
             </h2>
           </div>
           <h2 className="text-white">Here,</h2>
           <div className="flex justify-evenly items-center">
-            <h2 className="text-2xl text-semibold text-white">
+            <h2 className="text-xl text-semibold text-white">
               r = {r == 0 ? "0" : r.toFixed(5)}
             </h2>
-            <h2 className="text-2xl text-semibold text-white">
+            <h2 className="text-xl text-semibold text-white">
               n = {n == Infinity ? "0" : n.toFixed(2)}
             </h2>
           </div>
@@ -132,10 +132,10 @@ const TradeCredit = () => {
         {cd && cp && dp ? (
           <>
             {" "}
-            <h2 className="text-3xl font-bold text-center text-white my-1">
+            <h2 className="text-2xl font-bold text-center text-white my-1">
               Solving Formula
             </h2>
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start text-sm">
               <div className="flex justify-center items-center space-x-2 text-white">
                 <div>APR=</div>
                 <div className="flex flex-col justify-center items-center">
@@ -170,12 +170,9 @@ const TradeCredit = () => {
                 <div>x</div>
                 <div>100</div>
               </div>
-              <div className="text-white">
-                {" "}
-                <h2 className="w-[400px]  ml-[7%]  "> = {getApr()}%</h2>
-              </div>
+              <div className="ml-[8%] text-white"> = {getApr()}%</div>
             </div>
-            <div className="flex flex-col items-start text-white mt-7">
+            <div className="flex flex-col items-start text-white text-sm mt-7">
               <div className="flex justify-center e">
                 <div>
                   EIR ={`{`}(1 + r) {sup} - 1{`}`} x 100

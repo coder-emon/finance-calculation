@@ -11,13 +11,25 @@ const CostOfBankLoan = () => {
   const [cb_basis, setCb_basis] = useState(false);
 
   //   const mpDays = mp || 360;
-
-  const r = int_a / (loan - (d_basis && int_a) - (cb_basis && cb_a));
+  const Int_aChange = () => {
+    const n_int_a = loan && loan * (int_p && int_p / 100);
+    setInt_a(n_int_a);
+    return n_int_a;
+  };
+  const Cb_aChange = () => {
+    const n_cb_a = loan && loan * (cb_p && cb_p / 100);
+    setCb_a(n_cb_a);
+    return n_cb_a;
+  };
+  const r =
+    int_a /
+    (loan -
+      (d_basis && (int_a || Int_aChange())) -
+      (cb_basis && (cb_a || Cb_aChange())));
   const n = 360 / mp;
   const getApr = () => {
     const apr = mp < 360 ? r * n * 100 : r * 100;
     const twoDecimalApr = apr.toFixed(2);
-    console.log(twoDecimalApr);
     if (twoDecimalApr == Infinity) {
       return 0;
     }
@@ -29,21 +41,19 @@ const CostOfBankLoan = () => {
     if (twoDecimalEir == Infinity) {
       return 0;
     }
-    console.log(twoDecimalEir);
+
     return twoDecimalEir;
   };
+
   const handleLoanChange = (e) => {
     setLoan(e.target.value);
   };
   const handleInt_pChange = (e) => {
     setInt_p(e.target.value);
-    const n_int_a = loan * (int_p / 100);
-    setInt_a(n_int_a);
   };
+
   const handleCb_pChange = (e) => {
     setCb_p(e.target.value);
-    const n_cb_a = loan * (cb_p / 100);
-    setCb_a(n_cb_a);
   };
   const handleInt_aChange = (e) => {
     setInt_a(e.target.value);
@@ -59,39 +69,22 @@ const CostOfBankLoan = () => {
       <sup>{n ? n.toFixed(2) : "n"}</sup>
     </>
   );
+  const handleClear = (e) => {
+    e.preventDefault();
+    e.target.reset();
+    setLoan(0);
+    console.log(loan);
+    console.log(int_p);
+    console.log(cb_p);
+    console.log(mp);
+  };
   return (
     <div className="flex justify-center items-center px-5">
       <div className="flex flex-col w-full md:w-[400px] bg-gray-800 rounded shadow-white min-h-[350px] p-5">
         <h2 className="text-center text-2xl font-bold text-white">
           Cost of Bank Loan
         </h2>
-        <form>
-          <div className="flex space-x-3 ">
-            <div className="w-[50%] flex items-center justify-center">
-              <label htmlFor="d_basis" className="w-full text-white text-sm">
-                Dicount Basis
-              </label>
-              <input
-                type="checkbox"
-                id="d_basis"
-                className="w-full outline-none  bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm "
-                required
-                onClick={() => setD_basis(!d_basis)}
-              />
-            </div>
-            <div className="w-[50%] flex justify-center items-center">
-              <label htmlFor="cb_basis" className="w-full text-white text-sm">
-                CB / Reserve
-              </label>
-              <input
-                type="checkbox"
-                placeholder="Interest Percentage"
-                id="cb_basis"
-                className="w-full outline-none floc  bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
-                onClick={() => setCb_basis(!cb_basis)}
-              />
-            </div>
-          </div>
+        <form onSubmit={handleClear}>
           <div className="flex space-x-3 mb-3">
             <div className="w-[50%]">
               <label htmlFor="loan" className="w-full text-white text-sm">
@@ -102,7 +95,6 @@ const CostOfBankLoan = () => {
                 placeholder="Loan Amount"
                 id="loan"
                 className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm "
-                required
                 onChange={handleLoanChange}
               />
             </div>
@@ -133,6 +125,20 @@ const CostOfBankLoan = () => {
               />
             </div>
             <div className="w-[50%]">
+              <label htmlFor="mp" className="w-full text-white text-sm">
+                MP (Days)
+              </label>
+              <input
+                type="number"
+                placeholder="Maturity Period"
+                id="mp"
+                className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
+                onChange={handleMpChange}
+              />
+            </div>
+          </div>
+          <div className="flex space-x-3">
+            <div className="w-[50%]">
               <label htmlFor="int_a" className="w-full text-white text-sm">
                 Interest Amount
               </label>
@@ -140,12 +146,11 @@ const CostOfBankLoan = () => {
                 type="number"
                 placeholder="Interest Amount"
                 id="int_a"
+                defaultValue={loan && loan * (int_p && int_p / 100)}
                 className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
                 onChange={handleInt_aChange}
               />
             </div>
-          </div>
-          <div className="flex space-x-3">
             <div className="w-[50%]">
               <label htmlFor="cb_a" className="w-full text-white text-sm">
                 CB Amount
@@ -154,42 +159,66 @@ const CostOfBankLoan = () => {
                 type="number"
                 placeholder="CB Amount"
                 id="cb_a"
+                defaultValue={loan && loan * (cb_p && cb_p / 100)}
                 className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
                 onChange={handleCb_aChange}
               />
             </div>
-            <div className="w-[50%]">
-              <label htmlFor="mp" className="w-full text-white text-sm">
-                MP (Days)
+          </div>
+          <div className="flex space-x-3 my-2">
+            <div className="w-[50%] flex items-center justify-center">
+              <label htmlFor="d_basis" className="w-full text-white text-xs">
+                Dicount Basis
               </label>
               <input
-                type="number"
-                placeholder="Interest Amount"
-                id="mp"
-                className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
-                onChange={handleMpChange}
+                type="checkbox"
+                id="d_basis"
+                disabled={loan && (int_p || int_a) ? false : true}
+                className="w-full outline-none  bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm "
+                onClick={() => setD_basis(!d_basis)}
+              />
+            </div>
+            <div className="w-[50%] flex justify-center items-center">
+              <label htmlFor="cb_basis" className="w-full text-white text-xs">
+                CB / Reserve
+              </label>
+              <input
+                type="checkbox"
+                placeholder="Interest Percentage"
+                id="cb_basis"
+                disabled={loan && (cb_p || cb_a) ? false : true}
+                className="w-full outline-none floc  bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
+                onClick={() => setCb_basis(!cb_basis)}
               />
             </div>
           </div>
+          <div className="flex justify-center items-center">
+            <button
+              className="text-sm text-white bg-blue-700 px-2 py-1 rounded my-2 "
+              type="submit"
+            >
+              Clear Field
+            </button>
+          </div>
         </form>
         <div>
-          <h2 className="text-3xl font-bold text-center text-white my-1">
+          <h2 className="text-2xl font-bold text-center text-white my-1">
             Result
           </h2>
           <div className="flex justify-evenly items-center">
-            <h2 className="text-2xl text-semibold text-white">
+            <h2 className="text-xl text-semibold text-white">
               APR = {getApr()}%
             </h2>
-            <h2 className="text-2xl text-semibold text-white">
+            <h2 className="text-xl text-semibold text-white">
               EIR = {getEir()}%
             </h2>
           </div>
           <h2 className="text-white">Here,</h2>
           <div className="flex justify-evenly items-center">
-            <h2 className="text-2xl text-semibold text-white">
+            <h2 className="text-xl text-semibold text-white">
               r = {r == 0 ? "0" : r.toFixed(5)}
             </h2>
-            <h2 className="text-2xl text-semibold text-white">
+            <h2 className="text-xl text-semibold text-white">
               n = {n == Infinity ? "0" : n.toFixed(2)}
             </h2>
           </div>
@@ -197,10 +226,10 @@ const CostOfBankLoan = () => {
         {loan ? (
           <>
             {" "}
-            <h2 className="text-3xl font-bold text-center text-white my-1">
+            <h2 className="text-2xl font-bold text-center text-white my-1">
               Solving Formula
             </h2>
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start text-sm ">
               <div className="flex justify-center items-center space-x-2 text-white">
                 <div>APR=</div>
                 <div className="flex flex-col justify-center items-center">
@@ -243,7 +272,7 @@ const CostOfBankLoan = () => {
                 <h2 className="w-[400px]  ml-[7%]  "> = {getApr()}%</h2>
               </div>
             </div>
-            <div className="flex flex-col items-start text-white mt-7">
+            <div className="flex flex-col items-start text-white text-sm mt-7">
               <div className="flex justify-center e">
                 <div>
                   EIR ={`{`}(1 + r) {sup} - 1{`}`} x 100
