@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import img from "../../assets/Finance.png";
 const TradeCredit = () => {
   const [cd, setCd] = useState();
   const [cp, setCp] = useState();

@@ -54,7 +54,7 @@ const BestTradeCredit = () => {
       eirAmount: parseFloat(getEir()),
     };
     const newEirArr = [...eirArr, termInfo];
-    eirArr.push(termInfo);
+
     setEirArr(newEirArr);
     console.log(eirArr);
     setFinalBest(bestTradeCredit());

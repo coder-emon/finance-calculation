@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AmountToBePaid from "../Components/AmountToBePaid/AmountToBePaid";
+import BestCostOfBankLoan from "../Components/BestCostOfBankLoan/BestCostOfBankLoan";
 import BestTradeCredit from "../Components/BestTradeCredit/BestTradeCredit";
 import CostOfBankLoan from "../Components/CostOfBankLoan/CostOfBankLoan";
 import TradeCredit from "../Components/TradeCredit/TradeCredit";
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/costofbankloan",
         element: <CostOfBankLoan></CostOfBankLoan>,
+      },
+      {
+        path: "/bestcostofbankloan",
+        element: <BestCostOfBankLoan></BestCostOfBankLoan>,
       },
     ],
   },

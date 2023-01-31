@@ -1,34 +1,35 @@
 import React, { useState } from "react";
 
 const CostOfBankLoan = () => {
-  const [loan, setLoan] = useState();
-  const [int_p, setInt_p] = useState();
-  const [cb_p, setCb_p] = useState();
-  const [int_a, setInt_a] = useState();
-  const [cb_a, setCb_a] = useState();
-  const [mp, setMp] = useState();
-  const [d_basis, setD_basis] = useState(false);
-  const [cb_basis, setCb_basis] = useState(false);
+  const [info, setInfo] = useState({
+    loan: 0,
+    int_p: 0,
+    cb_p: 0,
+    int_a: 0,
+    cb_a: 0,
+    mp: 360,
+    d_basis: false,
+    cb_basis: false,
+  });
 
-  //   const mpDays = mp || 360;
   const Int_aChange = () => {
-    const n_int_a = loan && loan * (int_p && int_p / 100);
-    setInt_a(n_int_a);
+    const n_int_a = info.loan && info.loan * (info.int_p && info.int_p / 100);
+    setInfo({ ...info, int_a: n_int_a });
     return n_int_a;
   };
   const Cb_aChange = () => {
-    const n_cb_a = loan && loan * (cb_p && cb_p / 100);
-    setCb_a(n_cb_a);
+    const n_cb_a = info.loan && info.loan * (info.cb_p && info.cb_p / 100);
+    setInfo({ ...info, cb_a: n_cb_a });
     return n_cb_a;
   };
   const r =
-    int_a /
-    (loan -
-      (d_basis && (int_a || Int_aChange())) -
-      (cb_basis && (cb_a || Cb_aChange())));
-  const n = 360 / mp;
+    info.int_a /
+    (info.loan -
+      (info.d_basis && (info.int_a || Int_aChange())) -
+      (info.cb_basis && (info.cb_a || Cb_aChange())));
+  const n = 360 / info.mp;
   const getApr = () => {
-    const apr = mp < 360 ? r * n * 100 : r * 100;
+    const apr = info.mp < 360 ? r * n * 100 : r * 100;
     const twoDecimalApr = apr.toFixed(2);
     if (twoDecimalApr == Infinity) {
       return 0;
@@ -46,23 +47,29 @@ const CostOfBankLoan = () => {
   };
 
   const handleLoanChange = (e) => {
-    setLoan(e.target.value);
+    setInfo({ ...info, loan: e.target.value });
   };
   const handleInt_pChange = (e) => {
-    setInt_p(e.target.value);
+    setInfo({ ...info, int_p: e.target.value });
   };
 
   const handleCb_pChange = (e) => {
-    setCb_p(e.target.value);
+    setInfo({ ...info, cb_p: e.target.value });
   };
   const handleInt_aChange = (e) => {
-    setInt_a(e.target.value);
+    setInfo({ ...info, int_a: e.target.value });
   };
   const handleCb_aChange = (e) => {
-    setCb_a(e.target.value);
+    setInfo({ ...info, cb_a: e.target.value });
   };
   const handleMpChange = (e) => {
-    setMp(e.target.value);
+    setInfo({ ...info, mp: e.target.value });
+  };
+  const handleIntKeyUp = () => {
+    setInfo({ ...info, int_a: Int_aChange() });
+  };
+  const handleCbKeyUp = () => {
+    setInfo({ ...info, cb_a: Cb_aChange() });
   };
   const sup = (
     <>
@@ -72,11 +79,16 @@ const CostOfBankLoan = () => {
   const handleClear = (e) => {
     e.preventDefault();
     e.target.reset();
-    setLoan(0);
-    console.log(loan);
-    console.log(int_p);
-    console.log(cb_p);
-    console.log(mp);
+    setInfo({
+      loan: 0,
+      int_p: 0,
+      cb_p: 0,
+      int_a: 0,
+      cb_a: 0,
+      mp: 360,
+      d_basis: false,
+      cb_basis: false,
+    });
   };
   return (
     <div className="flex justify-center items-center px-5">
@@ -108,6 +120,7 @@ const CostOfBankLoan = () => {
                 id="int_p"
                 className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
                 onChange={handleInt_pChange}
+                onKeyUp={handleIntKeyUp}
               />
             </div>
           </div>
@@ -122,6 +135,7 @@ const CostOfBankLoan = () => {
                 id="cb_p"
                 className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
                 onChange={handleCb_pChange}
+                onKeyUp={handleCbKeyUp}
               />
             </div>
             <div className="w-[50%]">
@@ -132,6 +146,7 @@ const CostOfBankLoan = () => {
                 type="number"
                 placeholder="Maturity Period"
                 id="mp"
+                defaultValue="360"
                 className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
                 onChange={handleMpChange}
               />
@@ -146,7 +161,9 @@ const CostOfBankLoan = () => {
                 type="number"
                 placeholder="Interest Amount"
                 id="int_a"
-                defaultValue={loan && loan * (int_p && int_p / 100)}
+                defaultValue={
+                  info.loan && info.loan * (info.int_p && info.int_p / 100)
+                }
                 className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
                 onChange={handleInt_aChange}
               />
@@ -159,7 +176,9 @@ const CostOfBankLoan = () => {
                 type="number"
                 placeholder="CB Amount"
                 id="cb_a"
-                defaultValue={loan && loan * (cb_p && cb_p / 100)}
+                defaultValue={
+                  info.loan && info.loan * (info.cb_p && info.cb_p / 100)
+                }
                 className="w-full outline-none focus:ring-2 bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
                 onChange={handleCb_aChange}
               />
@@ -173,9 +192,11 @@ const CostOfBankLoan = () => {
               <input
                 type="checkbox"
                 id="d_basis"
-                disabled={loan && (int_p || int_a) ? false : true}
+                disabled={
+                  info.loan && (info.int_p || info.int_a) ? false : true
+                }
                 className="w-full outline-none  bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm "
-                onClick={() => setD_basis(!d_basis)}
+                onClick={(e) => setInfo({ ...info, d_basis: e.target.checked })}
               />
             </div>
             <div className="w-[50%] flex justify-center items-center">
@@ -186,9 +207,11 @@ const CostOfBankLoan = () => {
                 type="checkbox"
                 placeholder="Interest Percentage"
                 id="cb_basis"
-                disabled={loan && (cb_p || cb_a) ? false : true}
+                disabled={info.loan && (info.cb_p || info.cb_a) ? false : true}
                 className="w-full outline-none floc  bg-slate-200 rounded px-3 py-2 text-gray-800 mt-1 placeholder:text-sm"
-                onClick={() => setCb_basis(!cb_basis)}
+                onClick={(e) =>
+                  setInfo({ ...info, cb_basis: e.target.checked })
+                }
               />
             </div>
           </div>
@@ -223,7 +246,7 @@ const CostOfBankLoan = () => {
             </h2>
           </div>
         </div>
-        {loan ? (
+        {info.loan ? (
           <>
             {" "}
             <h2 className="text-2xl font-bold text-center text-white my-1">
@@ -236,7 +259,8 @@ const CostOfBankLoan = () => {
                   <span className="pb-1">Int</span>
                   <span></span>
                   <span className="border-t border-blue-50">
-                    Loan - Int - CB
+                    Loan {info.d_basis && "- Int"}
+                    {info.cb_basis && "- CB"}
                   </span>
                 </div>
                 <div>x</div>
@@ -251,18 +275,19 @@ const CostOfBankLoan = () => {
               <div className="flex justify-center items-center space-x-2 ml-[8%] text-white">
                 <div> =</div>
                 <div className="flex flex-col justify-center items-center">
-                  <span className="pb-1">{int_a}</span>
+                  <span className="pb-1">{info.int_a}</span>
                   <span></span>
                   <span className="border-t border-blue-50">
-                    {loan} {d_basis && "-"} {d_basis && int_a} {cb_basis && "-"}
-                    {cb_basis && cb_a}
+                    {info.loan} {info.d_basis && "-"}{" "}
+                    {info.d_basis && info.int_a} {info.cb_basis && "-"}
+                    {info.cb_basis && info.cb_a}
                   </span>
                 </div>
                 <div>x</div>
                 <div className="flex flex-col justify-center items-center">
                   <span className="pb-1">360</span>
                   <span></span>
-                  <span className="border-t border-blue-50">{mp}</span>
+                  <span className="border-t border-blue-50">{info.mp}</span>
                 </div>
                 <div>x</div>
                 <div>100</div>
