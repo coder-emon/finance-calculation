@@ -1,9 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import AmountToBePaid from "../Components/AmountToBePaid/AmountToBePaid";
-import BestCostOfBankLoan from "../Components/BestCostOfBankLoan/BestCostOfBankLoan";
-import BestTradeCredit from "../Components/BestTradeCredit/BestTradeCredit";
-import CostOfBankLoan from "../Components/CostOfBankLoan/CostOfBankLoan";
-import TradeCredit from "../Components/TradeCredit/TradeCredit";
+import AmountToBePaid from "../Components/CurrentLiabilitiesManagement/AmountToBePaid/AmountToBePaid";
+import BestCostOfBankLoan from "../Components/CurrentLiabilitiesManagement/BestCostOfBankLoan/BestCostOfBankLoan";
+import BestTradeCredit from "../Components/CurrentLiabilitiesManagement/BestTradeCredit/BestTradeCredit";
+import CostOfBankLoan from "../Components/CurrentLiabilitiesManagement/CostOfBankLoan/CostOfBankLoan";
+import CostOfBankLoanInstallment from "../Components/CurrentLiabilitiesManagement/CostOfBankLoanInstallment/CostOfBankLoanInstallment";
+import CostOfBankLoanRC from "../Components/CurrentLiabilitiesManagement/CostOfBankLoanRC/CostOfBankLoanRC";
+import TradeCredit from "../Components/CurrentLiabilitiesManagement/TradeCredit/TradeCredit";
 import Main from "../Layout/Main";
 
 export const router = createBrowserRouter([
@@ -13,6 +15,10 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <TradeCredit></TradeCredit>,
+      },
+      {
+        path: "/currentliabilities",
         element: <TradeCredit></TradeCredit>,
       },
       {
@@ -31,6 +37,14 @@ export const router = createBrowserRouter([
         path: "/bestcostofbankloan",
         element: <BestCostOfBankLoan></BestCostOfBankLoan>,
       },
+      {
+        path: "/costofbankloaninstalment",
+        element: <CostOfBankLoanInstallment></CostOfBankLoanInstallment>,
+      },
+      {
+        path: "/costofbankloanrc",
+        element: <CostOfBankLoanRC></CostOfBankLoanRC>
+      }
     ],
   },
 ]);

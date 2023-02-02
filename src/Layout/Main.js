@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import AuthorInfo from "../Components/AuthorInfo/AuthorInfo";
+import AuthorInfo from "../Components/CurrentLiabilitiesManagement/AuthorInfo/AuthorInfo";
 import Nav from "../Components/Nav/Nav";
 
 const Main = () => {

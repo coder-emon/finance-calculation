@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import PropTypes from "prop-types";
-const metaDecorator = require("../../assets/metaDecorator.json");
+const metaDecorator = require("../../../assets/metaDecorator.json");
 const MetaDecorator = ({ title, description, imageUrl, imageAlt }) => {
   return (
     <Helmet>

@@ -1,6 +1,6 @@
 import React from "react";
-import profileImg from "../../assets/profile.jpg";
-import financeImg from "../../assets/Finance.png";
+import profileImg from "../../../assets/profile.jpg";
+import financeImg from "../../../assets/Finance.png";
 import {
   FaFacebook,
   FaFacebookMessenger,
